@@ -82,3 +82,26 @@ function updateStatus(i, value) {
 
 function updateNights(i, value) {
   peopleData[i].nights = Number(value);
+  updateTotals();
+}
+
+function updateTotals() {
+  const totalCost = Number(document.getElementById("totalCost").value);
+
+  const confirmed = peopleData.filter(p => p.status === "Y");
+  const totalNights = confirmed.reduce((sum, p) => sum + p.nights, 0);
+
+  const costPerPerson = confirmed.length > 0 ? (totalCost / confirmed.length).toFixed(2) : 0;
+  const costPerNight = totalNights > 0 ? (totalCost / totalNights).toFixed(2) : 0;
+
+  document.getElementById("totalNights").innerText = totalNights;
+  document.getElementById("costPerPerson").innerText = costPerPerson;
+  document.getElementById("costPerNight").innerText = costPerNight;
+}
+
+renderPeople();
+updateTotals();
+</script>
+
+</body>
+</html>
