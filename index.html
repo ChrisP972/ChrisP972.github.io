@@ -77,13 +77,13 @@
 
   .input-row {
     display: flex;
-    gap: 16px;
     flex-wrap: wrap;
+    gap: 16px;
   }
 
   .input-group {
-    flex: 1 1 240px;   /* ensures each box has a minimum width */
-    min-width: 240px;  /* prevents shrinking too small */
+    flex: 1 1 240px;
+    min-width: 240px;
   }
 
   .input-label {
@@ -154,8 +154,8 @@
   }
 
   .summary-item {
-    flex: 1;
-    min-width: 160px;
+    flex: 1 1 240px;
+    min-width: 240px;
     padding: 10px 12px;
     border-radius: 10px;
     background: rgba(255,255,255,0.06);
@@ -177,6 +177,19 @@
 
   .summary-highlight {
     color: var(--accent2);
+  }
+
+  #exportBtn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #c9e6ff, #ffb7f5);
+    border: none;
+    color: #0a0f1c;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
   }
 </style>
 </head>
@@ -240,7 +253,12 @@
     </table>
   </div>
 
+  <button id="exportBtn">Export Cost Summary as Image</button>
+
 </div>
+
+<!-- html2canvas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script>
 const peopleData = [
@@ -328,6 +346,43 @@ function updateTotals() {
 
 renderTable();
 updateTotals();
+
+document.getElementById("exportBtn").addEventListener("click", () => {
+  const exportBox = document.createElement("div");
+  exportBox.style.padding = "20px";
+  exportBox.style.borderRadius = "16px";
+  exportBox.style.background = "white";
+  exportBox.style.color = "black";
+  exportBox.style.width = "600px";
+  exportBox.style.margin = "0 auto";
+  exportBox.style.fontFamily = "Arial";
+  exportBox.style.boxShadow = "0 4px 20px rgba(0,0,0,0.2)";
+  
+  let html = `<h2 style="margin-top:0;">Cost Summary</h2>`;
+  html += `<p><strong>Total Rental Cost:</strong> £${document.getElementById("totalCost").value}</p>`;
+  html += `<p><strong>Average Cost Per Night:</strong> £${document.getElementById("avgCostPerNight").value}</p>`;
+  html += `<p><strong>Total Nights:</strong> ${document.getElementById("totalNights").innerText}</p>`;
+  html += `<p><strong>Confirmed Guests:</strong> ${document.getElementById("confirmedCount").innerText}</p>`;
+  html += `<hr><h3>Individual Costs</h3>`;
+
+  peopleData.forEach((p, i) => {
+    if (p.status === "Y") {
+      const cost = document.getElementById(`cost-${i}`).innerText;
+      html += `<p>${p.name}: £${cost} (${p.nights} nights)</p>`;
+    }
+  });
+
+  exportBox.innerHTML = html;
+  document.body.appendChild(exportBox);
+
+  html2canvas(exportBox).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "cost-summary.png";
+    link.href = canvas.toDataURL();
+    link.click();
+    exportBox.remove();
+  });
+});
 </script>
 
 </body>
