@@ -2,32 +2,112 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Libby 30th Cost Calculator</title>
+<title>Libby's 30th Party Cost Calculator</title>
+
 <style>
-  body { font-family: Arial; padding: 20px; background: #fafafa; }
-  h2 { margin-top: 30px; }
-  .person { padding: 10px; background: white; margin-bottom: 10px; border-radius: 8px; }
-  label { display: block; margin-bottom: 6px; }
-  input, select { width: 100%; padding: 8px; margin-top: 4px; }
-  .summary { background: #fff; padding: 15px; border-radius: 8px; margin-top: 20px; }
+  body {
+    font-family: 'Arial';
+    background: linear-gradient(135deg, #ff9ec4, #ffd3a5);
+    margin: 0;
+    padding: 0;
+  }
+
+  header {
+    background: #ff4f81;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+
+  .container {
+    padding: 20px;
+  }
+
+  .input-box {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  th, td {
+    padding: 10px;
+    text-align: center;
+  }
+
+  th {
+    background: #ff4f81;
+    color: white;
+  }
+
+  tr:nth-child(even) {
+    background: #ffe6f0;
+  }
+
+  select, input {
+    padding: 6px;
+    width: 90%;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+
+  .summary {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  .summary h2 {
+    margin-top: 0;
+  }
 </style>
 </head>
+
 <body>
 
-<h1>Libby 30th Cost Calculator</h1>
+<header>🎉 Libby's 30th Birthday Cost Calculator 🎉</header>
 
-<label>Total Rental Cost (£):</label>
-<input type="number" id="totalCost" value="2606" oninput="updateTotals()">
+<div class="container">
 
-<h2>People Staying</h2>
+  <div class="input-box">
+    <label><strong>Total Rental Cost (£):</strong></label>
+    <input type="number" id="totalCost" value="2606" oninput="updateTotals()">
+  </div>
 
-<div id="people"></div>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Nights</th>
+      </tr>
+    </thead>
+    <tbody id="peopleTable"></tbody>
+  </table>
 
-<div class="summary">
-  <h2>Summary</h2>
-  <p><strong>Total Nights:</strong> <span id="totalNights">0</span></p>
-  <p><strong>Cost Per Person:</strong> £<span id="costPerPerson">0</span></p>
-  <p><strong>Cost Per Person Per Night:</strong> £<span id="costPerNight">0</span></p>
+  <div class="summary">
+    <h2>Summary</h2>
+    <p><strong>Total Nights:</strong> <span id="totalNights">0</span></p>
+    <p><strong>Cost Per Person:</strong> £<span id="costPerPerson">0</span></p>
+    <p><strong>Cost Per Person Per Night:</strong> £<span id="costPerNight">0</span></p>
+  </div>
+
 </div>
 
 <script>
@@ -52,25 +132,25 @@ const peopleData = [
   { name: "Nick", nights: 2, status: "TBD" }
 ];
 
-function renderPeople() {
-  const container = document.getElementById("people");
-  container.innerHTML = "";
+function renderTable() {
+  const table = document.getElementById("peopleTable");
+  table.innerHTML = "";
 
   peopleData.forEach((p, i) => {
-    container.innerHTML += `
-      <div class="person">
-        <label><strong>${p.name}</strong></label>
-        <label>Status:
+    table.innerHTML += `
+      <tr>
+        <td>${p.name}</td>
+        <td>
           <select onchange="updateStatus(${i}, this.value)">
             <option value="Y" ${p.status==="Y"?"selected":""}>Y</option>
             <option value="N" ${p.status==="N"?"selected":""}>N</option>
             <option value="TBD" ${p.status==="TBD"?"selected":""}>TBD</option>
           </select>
-        </label>
-        <label>Nights:
+        </td>
+        <td>
           <input type="number" min="0" value="${p.nights}" onchange="updateNights(${i}, this.value)">
-        </label>
-      </div>
+        </td>
+      </tr>
     `;
   });
 }
@@ -99,7 +179,7 @@ function updateTotals() {
   document.getElementById("costPerNight").innerText = costPerNight;
 }
 
-renderPeople();
+renderTable();
 updateTotals();
 </script>
 
