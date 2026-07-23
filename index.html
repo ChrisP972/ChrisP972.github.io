@@ -2,48 +2,55 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Libby's 30th Cost Split</title>
+<title>Libby & Sophie’s 30th – Suits & Sparkles</title>
 
 <style>
   :root {
-    --bg: #0f172a;
-    --card: #111827;
-    --accent: #f97316;
-    --accent-soft: rgba(249,115,22,0.15);
+    --bg: #0a0f1c;
+    --frost: rgba(255,255,255,0.08);
+    --glass: rgba(255,255,255,0.12);
+    --accent: #c9e6ff;
+    --accent2: #ffb7f5;
     --text: #e5e7eb;
     --muted: #9ca3af;
-    --border: #1f2937;
+    --border: rgba(255,255,255,0.15);
   }
 
   body {
     margin: 0;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: radial-gradient(circle at top, #1f2937 0, #020617 55%);
+    background: radial-gradient(circle at top, #1a2337 0, #0a0f1c 60%);
     color: var(--text);
   }
 
+  /* Winter banner */
   header {
-    padding: 18px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+    backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
+    padding: 18px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(15,23,42,0.9);
-    backdrop-filter: blur(10px);
   }
 
   header .title {
     font-size: 18px;
     font-weight: 600;
+    color: var(--accent);
+    text-shadow: 0 0 8px rgba(255,255,255,0.4);
   }
 
   header .tag {
     font-size: 12px;
     padding: 4px 10px;
     border-radius: 999px;
-    background: var(--accent-soft);
-    color: var(--accent);
-    border: 1px solid rgba(249,115,22,0.4);
+    background: rgba(255,255,255,0.18);
+    color: var(--accent2);
+    border: 1px solid rgba(255,255,255,0.3);
   }
 
   .container {
@@ -53,30 +60,30 @@
   }
 
   .card {
-    background: var(--card);
+    background: var(--glass);
     border-radius: 14px;
-    padding: 14px 16px;
+    padding: 16px;
     border: 1px solid var(--border);
     box-shadow: 0 18px 40px rgba(0,0,0,0.45);
-    margin-bottom: 14px;
+    margin-bottom: 16px;
   }
 
   .card-title {
     font-size: 14px;
     font-weight: 500;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
+    color: var(--accent);
   }
 
   .input-row {
     display: flex;
-    gap: 10px;
-    align-items: center;
+    gap: 12px;
     flex-wrap: wrap;
   }
 
   .input-group {
     flex: 1;
-    min-width: 140px;
+    min-width: 160px;
   }
 
   .input-label {
@@ -87,20 +94,20 @@
     margin-bottom: 4px;
   }
 
-  input[type="number"], select {
+  input[type="number"], input[type="text"], select {
     width: 100%;
-    padding: 7px 9px;
+    padding: 8px 10px;
     border-radius: 8px;
-    border: 1px solid #374151;
-    background: #020617;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.05);
     color: var(--text);
     font-size: 13px;
     outline: none;
   }
 
-  input[type="number"]:focus, select:focus {
+  input:focus, select:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 1px var(--accent-soft);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.2);
   }
 
   table {
@@ -110,7 +117,7 @@
   }
 
   th, td {
-    padding: 8px 6px;
+    padding: 10px 6px;
     text-align: left;
   }
 
@@ -123,25 +130,15 @@
   }
 
   tbody tr:nth-child(even) {
-    background: #020617;
+    background: rgba(255,255,255,0.03);
   }
 
   tbody tr:nth-child(odd) {
-    background: #030712;
+    background: rgba(255,255,255,0.06);
   }
 
   .name-cell {
     font-weight: 500;
-  }
-
-  .status-select, .nights-select {
-    width: 100%;
-    padding: 5px 7px;
-    border-radius: 7px;
-    border: 1px solid #374151;
-    background: #020617;
-    color: var(--text);
-    font-size: 12px;
   }
 
   .cost-cell {
@@ -153,16 +150,16 @@
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
-    margin-top: 8px;
+    margin-top: 14px;
   }
 
   .summary-item {
     flex: 1;
-    min-width: 140px;
-    padding: 8px 10px;
+    min-width: 160px;
+    padding: 10px 12px;
     border-radius: 10px;
-    background: #020617;
-    border: 1px solid #1f2937;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
   }
 
   .summary-label {
@@ -174,12 +171,12 @@
   }
 
   .summary-value {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
   }
 
   .summary-highlight {
-    color: var(--accent);
+    color: var(--accent2);
   }
 </style>
 </head>
@@ -187,36 +184,41 @@
 <body>
 
 <header>
-  <div class="title">Libby’s 30th • Cost Split</div>
-  <div class="tag">🎉 Birthday Weekend</div>
+  <div class="title">Libby & Sophie’s 30th – Suits & Sparkles ❄️✨</div>
+  <div class="tag">Winter Weekend</div>
 </header>
 
 <div class="container">
 
-  <!-- Top controls -->
+  <!-- Trip settings -->
   <div class="card">
-    <div class="card-title">Trip settings</div>
+    <div class="card-title">Trip Settings</div>
+
     <div class="input-row">
       <div class="input-group">
-        <div class="input-label">Total rental cost (£)</div>
+        <div class="input-label">Total Rental Cost (£)</div>
         <input type="number" id="totalCost" value="2606" min="0" oninput="updateTotals()">
       </div>
+
       <div class="input-group">
-        <div class="input-label">Average cost per night (£)</div>
+        <div class="input-label">Average Cost Per Night (£)</div>
         <input type="text" id="avgCostPerNight" readonly>
       </div>
     </div>
+
     <div class="summary-row">
       <div class="summary-item">
-        <div class="summary-label">Confirmed guests (Y)</div>
+        <div class="summary-label">Confirmed Guests (Y)</div>
         <div class="summary-value" id="confirmedCount">0</div>
       </div>
+
       <div class="summary-item">
-        <div class="summary-label">Total nights (Y only)</div>
+        <div class="summary-label">Total Nights (Y only)</div>
         <div class="summary-value" id="totalNights">0</div>
       </div>
+
       <div class="summary-item">
-        <div class="summary-label">Total cost checked</div>
+        <div class="summary-label">Total Cost Checked</div>
         <div class="summary-value summary-highlight">£<span id="totalCostCheck">0</span></div>
       </div>
     </div>
@@ -224,7 +226,7 @@
 
   <!-- People table -->
   <div class="card">
-    <div class="card-title">Guests & costs</div>
+    <div class="card-title">Guests & Costs</div>
     <table>
       <thead>
         <tr>
@@ -271,14 +273,14 @@ function renderTable() {
       <tr>
         <td class="name-cell">${p.name}</td>
         <td>
-          <select class="status-select" onchange="updateStatus(${i}, this.value)">
+          <select onchange="updateStatus(${i}, this.value)">
             <option value="Y" ${p.status==="Y"?"selected":""}>Y</option>
             <option value="N" ${p.status==="N"?"selected":""}>N</option>
             <option value="TBD" ${p.status==="TBD"?"selected":""}>TBD</option>
           </select>
         </td>
         <td>
-          <select class="nights-select" onchange="updateNights(${i}, this.value)">
+          <select onchange="updateNights(${i}, this.value)">
             <option value="1" ${p.nights===1?"selected":""}>1 night</option>
             <option value="2" ${p.nights===2?"selected":""}>2 nights</option>
           </select>
@@ -307,12 +309,10 @@ function updateTotals() {
 
   const avgCostPerNight = totalNights > 0 ? (totalCost / totalNights) : 0;
 
-  // Update summary
   document.getElementById("confirmedCount").innerText = confirmed.length;
   document.getElementById("totalNights").innerText = totalNights;
   document.getElementById("avgCostPerNight").value = avgCostPerNight.toFixed(2);
 
-  // Per-person costs
   let totalCostCheck = 0;
   peopleData.forEach((p, i) => {
     let personCost = 0;
