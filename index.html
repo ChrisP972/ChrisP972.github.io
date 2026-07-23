@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Libby 30th Cost Calculator</title>
+<style>
+  body { font-family: Arial; padding: 20px; background: #fafafa; }
+  h2 { margin-top: 30px; }
+  .person { padding: 10px; background: white; margin-bottom: 10px; border-radius: 8px; }
+  label { display: block; margin-bottom: 6px; }
+  input, select { width: 100%; padding: 8px; margin-top: 4px; }
+  .summary { background: #fff; padding: 15px; border-radius: 8px; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<h1>Libby 30th Cost Calculator</h1>
+
+<label>Total Rental Cost (£):</label>
+<input type="number" id="totalCost" value="2606" oninput="updateTotals()">
+
+<h2>People Staying</h2>
+
+<div id="people"></div>
+
+<div class="summary">
+  <h2>Summary</h2>
+  <p><strong>Total Nights:</strong> <span id="totalNights">0</span></p>
+  <p><strong>Cost Per Person:</strong> £<span id="costPerPerson">0</span></p>
+  <p><strong>Cost Per Person Per Night:</strong> £<span id="costPerNight">0</span></p>
+</div>
+
+<script>
+const peopleData = [
+  { name: "Chris H", nights: 2, status: "Y" },
+  { name: "Mabs", nights: 2, status: "Y" },
+  { name: "Emily", nights: 2, status: "Y" },
+  { name: "Matt S", nights: 0, status: "N" },
+  { name: "Chris P", nights: 2, status: "Y" },
+  { name: "Libby", nights: 2, status: "Y" },
+  { name: "Sophie", nights: 2, status: "Y" },
+  { name: "Anna D", nights: 2, status: "Y" },
+  { name: "Iris", nights: 2, status: "Y" },
+  { name: "Will", nights: 2, status: "Y" },
+  { name: "Amy B Boyfriend", nights: 2, status: "Y" },
+  { name: "Amy B", nights: 2, status: "Y" },
+  { name: "Alice", nights: 1, status: "Y" },
+  { name: "Hayden", nights: 1, status: "Y" },
+  { name: "Jack", nights: 2, status: "TBD" },
+  { name: "Emma", nights: 2, status: "TBD" },
+  { name: "Matt E", nights: 2, status: "TBD" },
+  { name: "Nick", nights: 2, status: "TBD" }
+];
+
+function renderPeople() {
+  const container = document.getElementById("people");
+  container.innerHTML = "";
+
+  peopleData.forEach((p, i) => {
+    container.innerHTML += `
+      <div class="person">
+        <label><strong>${p.name}</strong></label>
+        <label>Status:
+          <select onchange="updateStatus(${i}, this.value)">
+            <option value="Y" ${p.status==="Y"?"selected":""}>Y</option>
+            <option value="N" ${p.status==="N"?"selected":""}>N</option>
+            <option value="TBD" ${p.status==="TBD"?"selected":""}>TBD</option>
+          </select>
+        </label>
+        <label>Nights:
+          <input type="number" min="0" value="${p.nights}" onchange="updateNights(${i}, this.value)">
+        </label>
+      </div>
+    `;
+  });
+}
+
+function updateStatus(i, value) {
+  peopleData[i].status = value;
+  updateTotals();
+}
+
+function updateNights(i, value) {
+  peopleData[i].nights = Number(value);
