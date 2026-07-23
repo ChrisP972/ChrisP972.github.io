@@ -2,110 +2,240 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Libby's 30th Party Cost Calculator</title>
+<title>Libby's 30th Cost Split</title>
 
 <style>
+  :root {
+    --bg: #0f172a;
+    --card: #111827;
+    --accent: #f97316;
+    --accent-soft: rgba(249,115,22,0.15);
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+    --border: #1f2937;
+  }
+
   body {
-    font-family: 'Arial';
-    background: linear-gradient(135deg, #ff9ec4, #ffd3a5);
     margin: 0;
-    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: radial-gradient(circle at top, #1f2937 0, #020617 55%);
+    color: var(--text);
   }
 
   header {
-    background: #ff4f81;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    font-size: 26px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(15,23,42,0.9);
+    backdrop-filter: blur(10px);
+  }
+
+  header .title {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  header .tag {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border: 1px solid rgba(249,115,22,0.4);
   }
 
   .container {
-    padding: 20px;
+    padding: 16px;
+    max-width: 900px;
+    margin: 0 auto;
   }
 
-  .input-box {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  .card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+    margin-bottom: 14px;
+  }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .input-group {
+    flex: 1;
+    min-width: 140px;
+  }
+
+  .input-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  input[type="number"], select {
+    width: 100%;
+    padding: 7px 9px;
+    border-radius: 8px;
+    border: 1px solid #374151;
+    background: #020617;
+    color: var(--text);
+    font-size: 13px;
+    outline: none;
+  }
+
+  input[type="number"]:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent-soft);
   }
 
   table {
     width: 100%;
     border-collapse: collapse;
-    background: white;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    font-size: 13px;
   }
 
   th, td {
-    padding: 10px;
-    text-align: center;
+    padding: 8px 6px;
+    text-align: left;
   }
 
   th {
-    background: #ff4f81;
-    color: white;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
   }
 
-  tr:nth-child(even) {
-    background: #ffe6f0;
+  tbody tr:nth-child(even) {
+    background: #020617;
   }
 
-  select, input {
-    padding: 6px;
-    width: 90%;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+  tbody tr:nth-child(odd) {
+    background: #030712;
   }
 
-  .summary {
-    background: white;
-    padding: 15px;
+  .name-cell {
+    font-weight: 500;
+  }
+
+  .status-select, .nights-select {
+    width: 100%;
+    padding: 5px 7px;
+    border-radius: 7px;
+    border: 1px solid #374151;
+    background: #020617;
+    color: var(--text);
+    font-size: 12px;
+  }
+
+  .cost-cell {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .summary-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .summary-item {
+    flex: 1;
+    min-width: 140px;
+    padding: 8px 10px;
     border-radius: 10px;
-    margin-top: 20px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    background: #020617;
+    border: 1px solid #1f2937;
   }
 
-  .summary h2 {
-    margin-top: 0;
+  .summary-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+
+  .summary-value {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .summary-highlight {
+    color: var(--accent);
   }
 </style>
 </head>
 
 <body>
 
-<header>🎉 Libby's 30th Birthday Cost Calculator 🎉</header>
+<header>
+  <div class="title">Libby’s 30th • Cost Split</div>
+  <div class="tag">🎉 Birthday Weekend</div>
+</header>
 
 <div class="container">
 
-  <div class="input-box">
-    <label><strong>Total Rental Cost (£):</strong></label>
-    <input type="number" id="totalCost" value="2606" oninput="updateTotals()">
+  <!-- Top controls -->
+  <div class="card">
+    <div class="card-title">Trip settings</div>
+    <div class="input-row">
+      <div class="input-group">
+        <div class="input-label">Total rental cost (£)</div>
+        <input type="number" id="totalCost" value="2606" min="0" oninput="updateTotals()">
+      </div>
+      <div class="input-group">
+        <div class="input-label">Average cost per night (£)</div>
+        <input type="text" id="avgCostPerNight" readonly>
+      </div>
+    </div>
+    <div class="summary-row">
+      <div class="summary-item">
+        <div class="summary-label">Confirmed guests (Y)</div>
+        <div class="summary-value" id="confirmedCount">0</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Total nights (Y only)</div>
+        <div class="summary-value" id="totalNights">0</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Total cost checked</div>
+        <div class="summary-value summary-highlight">£<span id="totalCostCheck">0</span></div>
+      </div>
+    </div>
   </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Status</th>
-        <th>Nights</th>
-      </tr>
-    </thead>
-    <tbody id="peopleTable"></tbody>
-  </table>
-
-  <div class="summary">
-    <h2>Summary</h2>
-    <p><strong>Total Nights:</strong> <span id="totalNights">0</span></p>
-    <p><strong>Cost Per Person:</strong> £<span id="costPerPerson">0</span></p>
-    <p><strong>Cost Per Person Per Night:</strong> £<span id="costPerNight">0</span></p>
+  <!-- People table -->
+  <div class="card">
+    <div class="card-title">Guests & costs</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Nights</th>
+          <th style="text-align:right;">Cost (£)</th>
+        </tr>
+      </thead>
+      <tbody id="peopleTable"></tbody>
+    </table>
   </div>
 
 </div>
@@ -115,7 +245,7 @@ const peopleData = [
   { name: "Chris H", nights: 2, status: "Y" },
   { name: "Mabs", nights: 2, status: "Y" },
   { name: "Emily", nights: 2, status: "Y" },
-  { name: "Matt S", nights: 0, status: "N" },
+  { name: "Matt S", nights: 2, status: "N" },
   { name: "Chris P", nights: 2, status: "Y" },
   { name: "Libby", nights: 2, status: "Y" },
   { name: "Sophie", nights: 2, status: "Y" },
@@ -139,17 +269,21 @@ function renderTable() {
   peopleData.forEach((p, i) => {
     table.innerHTML += `
       <tr>
-        <td>${p.name}</td>
+        <td class="name-cell">${p.name}</td>
         <td>
-          <select onchange="updateStatus(${i}, this.value)">
+          <select class="status-select" onchange="updateStatus(${i}, this.value)">
             <option value="Y" ${p.status==="Y"?"selected":""}>Y</option>
             <option value="N" ${p.status==="N"?"selected":""}>N</option>
             <option value="TBD" ${p.status==="TBD"?"selected":""}>TBD</option>
           </select>
         </td>
         <td>
-          <input type="number" min="0" value="${p.nights}" onchange="updateNights(${i}, this.value)">
+          <select class="nights-select" onchange="updateNights(${i}, this.value)">
+            <option value="1" ${p.nights===1?"selected":""}>1 night</option>
+            <option value="2" ${p.nights===2?"selected":""}>2 nights</option>
+          </select>
         </td>
+        <td class="cost-cell">£<span id="cost-${i}">0.00</span></td>
       </tr>
     `;
   });
@@ -171,12 +305,25 @@ function updateTotals() {
   const confirmed = peopleData.filter(p => p.status === "Y");
   const totalNights = confirmed.reduce((sum, p) => sum + p.nights, 0);
 
-  const costPerPerson = confirmed.length > 0 ? (totalCost / confirmed.length).toFixed(2) : 0;
-  const costPerNight = totalNights > 0 ? (totalCost / totalNights).toFixed(2) : 0;
+  const avgCostPerNight = totalNights > 0 ? (totalCost / totalNights) : 0;
 
+  // Update summary
+  document.getElementById("confirmedCount").innerText = confirmed.length;
   document.getElementById("totalNights").innerText = totalNights;
-  document.getElementById("costPerPerson").innerText = costPerPerson;
-  document.getElementById("costPerNight").innerText = costPerNight;
+  document.getElementById("avgCostPerNight").value = avgCostPerNight.toFixed(2);
+
+  // Per-person costs
+  let totalCostCheck = 0;
+  peopleData.forEach((p, i) => {
+    let personCost = 0;
+    if (p.status === "Y") {
+      personCost = p.nights * avgCostPerNight;
+      totalCostCheck += personCost;
+    }
+    document.getElementById(`cost-${i}`).innerText = personCost.toFixed(2);
+  });
+
+  document.getElementById("totalCostCheck").innerText = totalCostCheck.toFixed(2);
 }
 
 renderTable();
