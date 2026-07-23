@@ -77,13 +77,13 @@
 
   .input-row {
     display: flex;
-    gap: 12px;
+    gap: 16px;
     flex-wrap: wrap;
   }
 
   .input-group {
-    flex: 1;
-    min-width: 160px;
+    flex: 1 1 240px;   /* ensures each box has a minimum width */
+    min-width: 240px;  /* prevents shrinking too small */
   }
 
   .input-label {
